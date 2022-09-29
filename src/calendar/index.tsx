@@ -298,7 +298,18 @@ const Calendar = (props: CalendarProps) => {
     onSwipe: (direction: string) => onSwipe(direction)
   };
 
-  const CalendarComponent = (
+  return enableSwipeMonths ? (
+    <GestureRecognizer {...swipeProps}>
+      <View
+        style={[style.current.container, propsStyle]}
+        accessibilityElementsHidden={accessibilityElementsHidden} // iOS
+        importantForAccessibility={importantForAccessibility} // Android
+      >
+        {renderHeader()}
+        {renderMonth()}
+      </View>
+    </GestureRecognizer>
+  ) : (
     <View
       style={[style.current.container, propsStyle]}
       accessibilityElementsHidden={accessibilityElementsHidden} // iOS
@@ -307,12 +318,6 @@ const Calendar = (props: CalendarProps) => {
       {renderHeader()}
       {renderMonth()}
     </View>
-  );
-
-  return enableSwipeMonths ? (
-    <GestureRecognizer {...swipeProps}>{CalendarComponent}</GestureRecognizer>
-  ) : (
-    {CalendarComponent}
   );
 };
 
